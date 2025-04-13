@@ -1,0 +1,79 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Productos";
+}
+
+<h2 class="text-center mb-5">Products List</h2>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <a class="btn btn-primary" asp-controller="Products" asp-action="Create">
+            <i class="bi bi-plus-circle"></i> Nuevo Producto
+        </a>
+    </div>
+    <div class="col-md-6 text-end">
+        <form asp-action="Index" method="get" class="d-flex">
+            <input type="text" name="searchString" class="form-control me-2" placeholder="Buscar producto..." />
+            <button type="submit" class="btn btn-outline-primary">Buscar</button>
+        </form>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Marca</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Descripción</th>
+                <th>Fecha de creación</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var product in Model)
+                {
+                    <tr>
+                        <td class="text-center">
+                            @if (!string.IsNullOrEmpty(product.ImageFileName))
+                            {
+                                <img src="/products/@product.ImageFileName" alt="@product.Name" style="max-height: 50px; max-width: 50px;" />
+                            }
+                            else
+                            {
+                                <span>Sin imagen</span>
+                            }
+                        </td>
+                        <td>@product.Name</td>
+                        <td>@product.Brand</td>
+                        <td>@product.Category</td>
+                        <td>@product.Price.ToString("C")</td>
+                        <td>@product.Description</td>
+                        <td>@product.CreatedAt.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning btn-sm mx-1">
+                                    <i class="bi bi-pencil"></i> Editar
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@product.Id" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-trash"></i> Eliminar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" class="text-center">No hay productos disponibles</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,76 @@
+﻿@model BestStoreMVC.Models.ProductDto
+
+@{
+    ViewData["Title"] = "Crear Producto";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">@ViewData["Title"]</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label"></label>
+                            <input asp-for="Name" class="form-control" placeholder="Ingrese el nombre del producto" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Brand" class="form-label"></label>
+                            <input asp-for="Brand" class="form-control" placeholder="Ingrese la marca del producto" />
+                            <span asp-validation-for="Brand" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Category" class="form-label"></label>
+                            <div class="col-sm-8">
+                                <select class="form-select" asp-for="Category">
+                                    <option value='Other'>Other</option>
+                                    <option value='Phones'>Phones</option>
+                                    <option value='Computers'>Computers</option>
+                                    <option value='Tablets'>Tablets</option>
+                                    <option value='Accessories'>Accessories</option>
+                                    <option value='Smartwatches'>Smartwatches</option>
+                                    <option value='SmartTVs'>SmartTVs</option>
+                                    <option value='SmartSpeakers'>SmartSpeakers</option>
+                                    <option value='SmartHome'>SmartHome</option>
+                                </select>
+                            </div>
+                            <span asp-validation-for="Category" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Price" class="form-label"></label>
+                            <input asp-for="Price" class="form-control" type="number" step="0.01" placeholder="Ingrese el precio del producto" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="4" placeholder="Ingrese una descripción del producto"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="ImageFile" class="form-label"></label>
+                            <input asp-for="ImageFile" class="form-control" type="file" />
+                            <span asp-validation-for="ImageFile" class="text-danger"></span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Crear
+                            </button>
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
