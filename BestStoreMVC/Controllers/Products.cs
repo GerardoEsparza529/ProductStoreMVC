@@ -70,22 +70,38 @@ namespace BestStoreMVC.Controllers
 
         public IActionResult Edit(int id)
         {
+
             var product = context.Products.Find(id);
 
+
+
             if (product == null)
+
             {
+
                 return RedirectToAction("Index", "Products");
+
             }
 
+
+
             var productDto = new ProductDto()
+
             {
                 Id = product.Id,
                 Name = product.Name,
+
                 Brand = product.Brand,
+
                 Category = product.Category,
+
                 Price = product.Price,
+
                 Description = product.Description,
+
             };
+
+
 
             ViewData["ProductId"] = product.Id;
 
@@ -93,7 +109,10 @@ namespace BestStoreMVC.Controllers
 
             ViewData["CreatedAt"] = product.CreatedAt.ToString("MM/dd/yyyy");
 
+
+
             return View(productDto);
+
         }
 
         [HttpPost]
@@ -134,7 +153,7 @@ namespace BestStoreMVC.Controllers
                 context.SaveChanges();
                 TempData["Success"] = "Producto actualizado correctamente";
 
-                return RedirectToAction("Index", "Products");
+                return RedirectToAction("Index");
             }
 
             ViewData["ProductId"] = id;
@@ -144,27 +163,6 @@ namespace BestStoreMVC.Controllers
             return View(productDto);
         }
 
-        public IActionResult Delete(int id)
-        {
-            var product = context.Products.Find(id);
-            if (product == null)
-            {
-                return RedirectToAction("Index", "Products");
-            }
-
-            string imageFullPath = Path.Combine(enviroment.WebRootPath, "products", product.ImageFileName);
-            if (System.IO.File.Exists(imageFullPath))
-            {
-                System.IO.File.Delete(imageFullPath);
-            }
-
-
-            // Eliminar el producto de la base de datos
-            context.Products.Remove(product);
-            context.SaveChanges();
-            TempData["Success"] = "Product deleted successfully";
-            return RedirectToAction("Index", "Products");
-        }
 
     }
 }
